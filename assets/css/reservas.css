@@ -1,0 +1,66 @@
+/* Tarjetas de reservas */
+.tarjeta-reserva {
+    background-color: #fcf7f7;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.tarjeta-reserva:hover {
+    transform: translateY(-3px);
+}
+
+.tarjeta-reserva h5 {
+    font-weight: 600;
+    color: #333333;
+}
+
+.tarjeta-reserva p {
+    margin: 4px 0;
+    color: #555555;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.badge-pendiente {
+    background-color: #ffc107;
+    color: #ffffff;
+}
+
+.badge-reservado {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.badge-cancelado {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.btn-confirmar {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-confirmar:hover {
+    background-color: #218838;
+}
+
+.btn-cancelar {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-cancelar:hover {
+    background-color: #b02a37;
+}

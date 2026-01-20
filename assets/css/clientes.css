@@ -1,0 +1,60 @@
+/* Tabla clientes moderna */
+
+.table-clientes {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.table-clientes th {
+    font-weight: 600;
+    background-color: #ff8c00;
+    color: #ffffff;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.table-clientes td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0dcdc;
+    color: #333333;
+    vertical-align: middle;
+    background-color: #fcf7f7;
+}
+
+.table-clientes tbody tr:hover {
+    background-color: #fff2e0;
+    cursor: pointer;
+}
+
+.table-clientes .btn {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    margin-right: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.table-clientes .btn-editar {
+    background-color: #ff8c00;
+    color: #ffffff;
+    border: none;
+}
+
+.table-clientes .btn-editar:hover {
+    background-color: #e67e00;
+}
+
+.table-clientes .btn-eliminar {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+}
+
+.table-clientes .btn-eliminar:hover {
+    background-color: #c0392b;
+}

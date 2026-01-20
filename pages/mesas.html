@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mesas | Restaurant Hub</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/themes.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/sidebar.css">
+
+<style>
+.area-tab { margin-bottom: 15px; }
+.area-tab .nav-link { background-color:#ff8c00; color:#fff; margin-right:5px; border-radius:6px; }
+.area-tab .nav-link.active { background-color:#e67e00; }
+.mesa-card { width:80px; height:80px; margin:5px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; background-color:#28a745; color:#fff; font-weight:bold; }
+.mesa-card.ocupada { background-color:#e74c3c; }
+.mesa-card:hover { opacity:0.8; }
+</style>
+</head>
+<body>
+
+<div class="d-flex">
+    <aside class="sidebar">
+        <div class="sidebar-header">RestaurantHub</div>
+        <ul class="sidebar-menu">
+                <li><a href="../dashboard.html">Dashboard</a></li>
+                <li ><a href="pages/punto_venta.html">Punto de Venta</a></li>
+                <li ><a href="/pages/caja.html">Caja</a></li>
+                <li><a href="/pages/reservas.html">Reservas</a></li>
+                <li class="active"><a href="/pages/mesas.html">Mesas</a></li>
+                <li><a href="/pages/inventario.html">Inventario</a></li>
+                <li><a href="/pages/categorias.html">Categorias</a></li>
+                <li><a href="/pages/cocina.html">Cocina</a></li>
+                <li><a href="/pages/clientes.html">Clientes</a></li>
+                <li><a href="/pages/reportes.html">Reportes</a></li>
+                <li><a href="/pages/usuarios.html">Usuarios</a></li>
+                <li><a href="/pages/configuracion.html">Configuración</a></li>
+            </ul>
+    </aside>
+
+    <div class="container-fluid p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="titulo">Diseño de Mesas</h2>
+            <div>
+                <button class="btn btn-orange" id="btnNuevaArea"><i class="bi bi-plus-circle"></i> Nueva Área</button>
+                <button class="btn btn-orange" id="btnNuevaMesa"><i class="bi bi-plus-circle"></i> Nueva Mesa</button>
+                <button class="btn btn-orange" id="btnAgregarBarra">Agregar Barra de Bebidas</button>
+                <button class="btn btn-success" id="btnGuardarDiseño">Guardar Diseño</button>
+            </div>
+        </div>
+
+        <!-- Pestañas de áreas -->
+        <ul class="nav nav-tabs area-tab" id="areasTabs"></ul>
+
+        <!-- Contenido de mesas por área -->
+        <div class="tab-content mt-3" id="areasContent"></div>
+
+    </div>
+</div>
+
+<!-- Modal Nueva Área -->
+<div class="modal fade" id="modalArea" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content modal-dark">
+<div class="modal-header">
+<h5 class="modal-title">Nueva Área</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<input type="text" id="nombreArea" class="form-control" placeholder="Nombre del área">
+</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+<button class="btn btn-orange" id="guardarArea">Guardar</button>
+</div>
+</div></div></div>
+
+<!-- Modal Nueva Mesa -->
+<div class="modal fade" id="modalMesa" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content modal-dark">
+<div class="modal-header">
+<h5 class="modal-title">Nueva Mesa</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<input type="number" id="numeroMesa" class="form-control" placeholder="Número de mesa">
+</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+<button class="btn btn-orange" id="guardarMesa">Guardar</button>
+</div>
+</div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let areas = [];
+let mesas = {};
+
+const areasTabs = document.getElementById('areasTabs');
+const areasContent = document.getElementById('areasContent');
+
+const modalArea = new bootstrap.Modal(document.getElementById('modalArea'));
+const modalMesa = new bootstrap.Modal(document.getElementById('modalMesa'));
+
+document.getElementById('btnNuevaArea').addEventListener('click', () => modalArea.show());
+document.getElementById('guardarArea').addEventListener('click', () => {
+    const nombre = document.getElementById('nombreArea').value.trim();
+    if(!nombre) return alert('Ingrese nombre del área');
+    areas.push(nombre);
+    mesas[nombre] = [];
+    actualizarAreas();
+    modalArea.hide();
+});
+
+document.getElementById('btnNuevaMesa').addEventListener('click', () => {
+    if(areas.length === 0) return alert('Cree primero un área');
+    modalMesa.show();
+});
+
+document.getElementById('guardarMesa').addEventListener('click', () => {
+    const numero = document.getElementById('numeroMesa').value.trim();
+    if(!numero) return alert('Ingrese número de mesa');
+    const areaActiva = document.querySelector('.nav-link.active').textContent;
+    mesas[areaActiva].push({numero: numero, estado: 'Disponible'});
+    actualizarMesas();
+    modalMesa.hide();
+});
+
+document.getElementById('btnGuardarDiseño').addEventListener('click', () => {
+    localStorage.setItem('disenoMesas', JSON.stringify(mesas));
+    alert('Diseño guardado y listo para punto de venta');
+});
+
+function actualizarAreas(){
+    areasTabs.innerHTML = '';
+    areasContent.innerHTML = '';
+    areas.forEach((area, index) => {
+        const active = index === 0 ? 'active' : '';
+        areasTabs.innerHTML += `<li class="nav-item"><a class="nav-link ${active}" data-bs-toggle="tab" href="#area${index}">${area}</a></li>`;
+        areasContent.innerHTML += `<div class="tab-pane ${active}" id="area${index}"><div class="d-flex flex-wrap" id="mesasArea${index}"></div></div>`;
+    });
+    actualizarMesas();
+}
+
+function actualizarMesas(){
+    areas.forEach((area, index) => {
+        const container = document.getElementById(`mesasArea${index}`);
+        container.innerHTML = '';
+        mesas[area].forEach(mesa => {
+            const div = document.createElement('div');
+            div.className = 'mesa-card';
+            div.textContent = mesa.numero;
+            if(mesa.estado !== 'Disponible') div.classList.add('ocupada');
+            container.appendChild(div);
+        });
+    });
+}
+
+// Al cargar la página, recuperar diseño previo
+if(localStorage.getItem('disenoMesas')){
+    mesas = JSON.parse(localStorage.getItem('disenoMesas'));
+    areas = Object.keys(mesas);
+    actualizarAreas();
+}
+</script>
+</body>
+</html>

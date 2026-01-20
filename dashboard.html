@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Hub | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/themes.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="d-flex">
+
+        <!-- SIDEBAR -->
+
+
+        <aside class="sidebar">
+            <div class="sidebar-header">RestaurantHub</div>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="pages/punto_venta.html">Punto de Venta</a></li>   
+                <li><a href="pages/caja.html">Caja</a></li>
+                <li><a href="pages/reservas.html">Reservas</a></li>
+                <li><a href="pages/mesas.html">Mesas</a></li>
+                <li><a href="pages/inventario.html">Inventario</a></li>
+                <li><a href="pages/categorias.html">Categorias</a></li>
+                <li><a href="pages/cocina.html">Cocina</a></li>
+                <li><a href="pages/clientes.html">Clientes</a></li>
+                <li><a href="pages/reportes.html">Reportes</a></li>
+                <li><a href="pages/usuarios.html">Usuarios</a></li>
+                <li><a href="pages/configuracion.html">Configuración</a></li>
+                         
+
+            </ul>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <main class="content w-100">
+
+            <!-- TOPBAR -->
+            <header class="topbar d-flex justify-content-between align-items-center">
+                <input type="text" class="form-control search" placeholder="Buscar en el sistema...">
+
+                <div class="d-flex align-items-center gap-3">
+                    <span id="datetime" class="datetime"></span>
+                    <button class="btn btn-outline-secondary" onclick="toggleTheme()">🌙</button>
+                </div>
+            </header>
+
+            <!-- PANEL ADMIN -->
+            <section class="admin-panel mt-4">
+                <div class="admin-info">
+                    <strong>Administrador</strong>
+                    <small>Panel de control</small>
+                </div>
+
+                <div class="admin-actions">
+                    <button class="btn btn-primary">➕ Menú del Día</button>
+                    <button class="btn btn-outline-primary">🧾 Agregar Pedido</button>
+                </div>
+            </section>
+
+            <!-- KPIs -->
+            <section class="container-fluid mt-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card dashboard-card primary">
+                            <p>Ventas del Día</p>
+                            <h2>$0.00</h2>
+                            <span>0 órdenes</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card dashboard-card success">
+                            <p>Mesas Ocupadas</p>
+                            <h2>0</h2>
+                            <span>En servicio</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VENTAS -->
+            <section class="container-fluid mt-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card block">
+                            <h5>Ranking de ventas</h5>
+                            <p class="text-muted">Aún no hay ventas registradas.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card block">
+                            <h5>Tipo de Venta</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">🍽️ En el sitio</li>
+                                <li class="list-group-item">🚚 Food Truck</li>
+                                <li class="list-group-item">🏠 A domicilio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SALONES -->
+            <section class="container-fluid mt-4 mb-4">
+                <div class="card block">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5>Áreas</h5>
+                        <button class="btn btn-sm btn-outline-primary">➕ Agregar Área</button>
+                    </div>
+                    <p class="text-muted">No hay áreas configuradas.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/datetime.js"></script>
+</body>
+
+</html>

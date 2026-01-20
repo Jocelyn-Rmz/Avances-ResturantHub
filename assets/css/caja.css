@@ -1,0 +1,35 @@
+.resumen-caja {
+    background-color: #fcf7f7;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.resumen-caja:hover { transform: translateY(-3px); }
+
+.resumen-caja h6 { font-weight: 600; color: #333333; margin-bottom: 8px; }
+
+.resumen-caja .valor { font-size: 1.3rem; font-weight: 700; color: #ff8c00; }
+
+.table-caja {
+    width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.table-caja th {
+    font-weight: 600; background-color: #ff8c00; color: #fff; padding: 12px 15px; text-align: left;
+}
+
+.table-caja td {
+    padding: 12px 15px; border-bottom: 1px solid #e0dcdc;
+    color: #333; vertical-align: middle; background-color: #fcf7f7;
+}
+
+.table-caja tbody tr:hover { background-color: #fff2e0; cursor: pointer; }
+
+.table-caja .btn-imprimir {
+    background-color: #17a2b8; color: #fff; border: none; border-radius: 6px; padding: 4px 10px;
+}
+
+.table-caja .btn-imprimir:hover { background-color: #138496; }

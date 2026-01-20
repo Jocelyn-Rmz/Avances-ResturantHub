@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Caja | Restaurant Hub</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/themes.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/sidebar.css">
+
+<style>
+/* Tarjetas de resumen */
+.resumen-caja { border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); text-align:center; padding:20px; }
+.resumen-caja h6 { font-weight:600; }
+.resumen-caja .valor { font-size:1.5rem; font-weight:bold; margin:0; }
+
+/* Tablas */
+.table-caja { width:100%; border-collapse: collapse; font-family:'Segoe UI', sans-serif; }
+.table-caja th { background-color:#ff8c00; color:#fff; font-weight:600; padding:10px; text-align:left; }
+.table-caja td { padding:10px; border-bottom:1px solid #e0dcdc; color:#333; vertical-align:middle; }
+.table-caja tbody tr:hover { background-color:#fff2e0; cursor:pointer; }
+.table-caja .btn { font-size:13px; padding:5px 10px; border-radius:6px; margin-right:5px; }
+.btn-imprimir { background-color:#28a745; color:#fff; border:none; }
+.btn-imprimir:hover { background-color:#218838; }
+.btn-salida { background-color:#e74c3c; color:#fff; border:none; }
+.btn-salida:hover { background-color:#c0392b; }
+.btn-orange { background-color:#ff8c00; color:#fff; border:none; }
+.btn-orange:hover { background-color:#e67e00; }
+</style>
+</head>
+<body>
+
+<div class="d-flex">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">RestaurantHub</div>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html">Dashboard</a></li>
+                <li ><a href="/pages/punto_venta.html">Punto de Venta</a></li>
+                <li class="active"><a href="/pages/caja.html">Caja</a></li>
+                <li><a href="/pages/reservas.html">Reservas</a></li>
+                <li><a href="/pages/mesas.html">Mesas</a></li>
+                <li><a href="/pages/inventario.html">Inventario</a></li>
+                <li><a href="/pages/categorias.html">Categorias</a></li>
+                <li><a href="/pages/cocina.html">Cocina</a></li>
+                <li><a href="/pages/clientes.html">Clientes</a></li>
+                <li><a href="/pages/reportes.html">Reportes</a></li>
+                <li><a href="/pages/usuarios.html">Usuarios</a></li>
+                <li><a href="/pages/configuracion.html">Configuración</a></li>
+            </ul>
+    </aside>
+
+    <div class="container-fluid p-4">
+
+        <!-- Encabezado -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="titulo">Caja</h2>
+            <div>
+                <button class="btn btn-success me-2" id="abrirTurno">Abrir Turno</button>
+                <button class="btn btn-danger me-2" id="cerrarTurno">Cerrar Turno</button>
+                <button class="btn btn-secondary me-2" id="verHistorialTurnos">Historial de Turnos</button>
+                <button class="btn btn-salida" id="registrarSalida">Registrar Salida</button>
+                <button class="btn btn-primary me-2" id="corteDiario">Corte Diario</button>
+
+            </div>
+        </div>
+
+        <!-- Fecha, hora y estado turno -->
+        <div class="mb-4 d-flex align-items-center gap-3">
+            <div><strong>Fecha:</strong> <span id="fechaActual"></span></div>
+            <div><strong>Hora:</strong> <span id="horaActual"></span></div>
+            <div><strong>Turno:</strong> <span id="estadoTurno">Cerrado</span></div>
+        </div>
+
+        <!-- Resumen Caja -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card resumen-caja">
+                    <h6>Ventas Totales</h6>
+                    <p class="valor" id="ventasTotales">0</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card resumen-caja">
+                    <h6>Entrada de Efectivo</h6>
+                    <p class="valor" id="entradaEfectivo">$0.00</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card resumen-caja">
+                    <h6>Salida de Efectivo</h6>
+                    <p class="valor" id="salidaEfectivo">$0.00</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card resumen-caja">
+                    <h6>Dinero en Caja</h6>
+                    <p class="valor" id="dineroCaja">$0.00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Agregar Venta -->
+        <div class="mb-4">
+            <button class="btn btn-orange" id="agregarVentaBtn" disabled><i class="bi bi-plus-circle"></i> Agregar Venta</button>
+        </div>
+
+        <!-- Tabla de ventas del turno -->
+        <div class="card card-body mb-4">
+            <h5>Ventas del Turno Actual</h5>
+            <table class="table-caja mt-3">
+                <thead>
+                    <tr>
+                        <th>Hora</th><th>Folio</th><th>Cliente</th><th>Mesa</th><th>Método</th><th>Total</th><th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="ventasTurno"></tbody>
+            </table>
+        </div>
+
+        <!-- Tabla Historial Turnos -->
+        <div class="card card-body">
+            <h5>Historial de Turnos</h5>
+            <table class="table-caja mt-3">
+                <thead>
+                    <tr>
+                        <th>Turno #</th><th>Fecha</th><th>Ventas Totales</th><th>Entrada Efectivo</th><th>Salida Efectivo</th><th>Dinero en Caja</th><th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="historialTurnos"></tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Agregar Venta -->
+<div class="modal fade" id="modalVenta" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Venta</h5>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formVenta">
+                    <div class="mb-3"><label>Folio</label><input type="number" class="form-control" placeholder="Ej. 1001" required></div>
+                    <div class="mb-3"><label>Cliente</label><input type="text" class="form-control" placeholder="Ej. Juan Pérez" required></div>
+                    <div class="mb-3"><label>Mesa</label><input type="number" class="form-control" placeholder="Ej. 5" required></div>
+                    <div class="mb-3"><label>Método de Venta</label>
+                        <select class="form-select"><option>Efectivo</option><option>Tarjeta</option><option>Otro</option></select>
+                    </div>
+                    <div class="mb-3"><label>Total</label><input type="number" class="form-control" placeholder="Ej. 250.00" step="0.01" required></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-orange" id="guardarVenta">Guardar Venta</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const fechaActual = document.getElementById('fechaActual');
+const horaActual = document.getElementById('horaActual');
+const estadoTurno = document.getElementById('estadoTurno');
+const agregarVentaBtn = document.getElementById('agregarVentaBtn');
+
+let turnoAbierto = false;
+let turnoNum = 0;
+let ventasTotales = 0;
+let entradaEfectivo = 0;
+let salidaEfectivo = 0;
+let ventasDelTurno = [];
+let historialTurnosData = [];
+
+const ventasTurnoTbody = document.getElementById('ventasTurno');
+const historialTurnosTbody = document.getElementById('historialTurnos');
+
+const actualizarFechaHora = () => {
+    const ahora = new Date();
+    fechaActual.textContent = ahora.toLocaleDateString();
+    horaActual.textContent = ahora.toLocaleTimeString();
+};
+setInterval(actualizarFechaHora, 1000);
+actualizarFechaHora();
+
+const actualizarResumen = () => {
+    document.getElementById('ventasTotales').textContent = ventasTotales;
+    document.getElementById('entradaEfectivo').textContent = `$${entradaEfectivo.toFixed(2)}`;
+    document.getElementById('salidaEfectivo').textContent = `$${salidaEfectivo.toFixed(2)}`;
+    document.getElementById('dineroCaja').textContent = `$${(entradaEfectivo - salidaEfectivo).toFixed(2)}`;
+};
+
+// Abrir Turno
+document.getElementById('abrirTurno').addEventListener('click', () => {
+    turnoAbierto = true;
+    turnoNum++;
+    ventasTotales = 0;
+    entradaEfectivo = 0;
+    salidaEfectivo = 0;
+    ventasDelTurno = [];
+    ventasTurnoTbody.innerHTML = '';
+    estadoTurno.textContent = `Abierto (#${turnoNum})`;
+    agregarVentaBtn.disabled = false;
+    actualizarResumen();
+    alert(`Turno #${turnoNum} abierto`);
+});
+
+// Cerrar Turno
+document.getElementById('cerrarTurno').addEventListener('click', () => {
+    if (!turnoAbierto) return alert('No hay turno abierto.');
+    turnoAbierto = false;
+    estadoTurno.textContent = 'Cerrado';
+    agregarVentaBtn.disabled = true;
+
+    historialTurnosData.push({
+        turno: turnoNum,
+        fecha: new Date().toLocaleDateString(),
+        ventasTotales,
+        entradaEfectivo,
+        salidaEfectivo,
+        dineroCaja: entradaEfectivo - salidaEfectivo,
+        ventas: [...ventasDelTurno]
+    });
+    actualizarHistorialTurnos();
+    alert(`Corte de Caja del Turno #${turnoNum} realizado.`);
+});
+
+// Modal ventas
+const modalVenta = new bootstrap.Modal(document.getElementById('modalVenta'));
+agregarVentaBtn.addEventListener('click', () => {
+    document.getElementById('formVenta').reset();
+    modalVenta.show();
+});
+
+// Guardar Venta
+document.getElementById('guardarVenta').addEventListener('click', () => {
+    const form = document.getElementById('formVenta');
+    const folio = form[0].value;
+    const cliente = form[1].value;
+    const mesa = form[2].value;
+    const metodo = form[3].value;
+    const total = parseFloat(form[4].value);
+
+    if (!folio || !cliente || !mesa || !metodo || isNaN(total)) return;
+
+    ventasTotales += 1;
+    if (metodo.toLowerCase() === 'efectivo') entradaEfectivo += total;
+
+    ventasDelTurno.push({hora: new Date().toLocaleTimeString(), folio, cliente, mesa, metodo, total});
+    actualizarResumen();
+    actualizarTablaVentas();
+    modalVenta.hide();
+});
+
+// Registrar Salida de Efectivo
+document.getElementById('registrarSalida').addEventListener('click', () => {
+    if (!turnoAbierto) return alert('No hay turno abierto.');
+    const monto = parseFloat(prompt('Ingrese monto de salida de efectivo:'));
+    if (isNaN(monto) || monto <= 0) return alert('Monto inválido');
+    salidaEfectivo += monto;
+    actualizarResumen();
+    alert(`Salida de efectivo registrada: $${monto.toFixed(2)}`);
+});
+
+function actualizarTablaVentas() {
+    ventasTurnoTbody.innerHTML = '';
+    ventasDelTurno.forEach(v => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `<td>${v.hora}</td><td>${v.folio}</td><td>${v.cliente}</td><td>${v.mesa}</td><td>${v.metodo}</td><td>$${v.total.toFixed(2)}</td><td class="text-center"><button class="btn btn-imprimir btn-sm">Imprimir</button></td>`;
+        fila.querySelector('.btn-imprimir').addEventListener('click', () => {
+            alert(`Ticket Venta\nFolio: ${v.folio}\nCliente: ${v.cliente}\nMesa: ${v.mesa}\nMétodo: ${v.metodo}\nTotal: $${v.total.toFixed(2)}`);
+        });
+        ventasTurnoTbody.appendChild(fila);
+    });
+}
+
+function actualizarHistorialTurnos() {
+    historialTurnosTbody.innerHTML = '';
+    historialTurnosData.forEach(turno => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `<td>${turno.turno}</td><td>${turno.fecha}</td><td>${turno.ventasTotales}</td><td>$${turno.entradaEfectivo.toFixed(2)}</td><td>$${turno.salidaEfectivo.toFixed(2)}</td><td>$${turno.dineroCaja.toFixed(2)}</td><td class="text-center"><button class="btn btn-imprimir btn-sm">Imprimir</button></td>`;
+        fila.querySelector('.btn-imprimir').addEventListener('click', () => {
+            let reporte = `Corte Turno #${turno.turno} - ${turno.fecha}\nVentas Totales: ${turno.ventasTotales}\nEntrada: $${turno.entradaEfectivo.toFixed(2)}\nSalida: $${turno.salidaEfectivo.toFixed(2)}\nDinero en Caja: $${turno.dineroCaja.toFixed(2)}\n\nDetalle Ventas:\n`;
+            turno.ventas.forEach(v => reporte += `${v.hora} - ${v.folio} - ${v.cliente} - $${v.total.toFixed(2)}\n`);
+            alert(reporte);
+        });
+        historialTurnosTbody.appendChild(fila);
+    });
+}
+
+document.getElementById('corteDiario').addEventListener('click', () => {
+    if (historialTurnosData.length === 0) return alert('No hay turnos registrados hoy.');
+
+    let totalVentas = 0;
+    let totalEntrada = 0;
+    let totalSalida = 0;
+    let totalCaja = 0;
+    let detalleVentas = '';
+
+    historialTurnosData.forEach(turno => {
+        totalVentas += turno.ventasTotales;
+        totalEntrada += turno.entradaEfectivo;
+        totalSalida += turno.salidaEfectivo;
+        totalCaja += turno.dineroCaja;
+
+        detalleVentas += `\n--- Turno #${turno.turno} (${turno.fecha}) ---\n`;
+        turno.ventas.forEach(v => {
+            detalleVentas += `${v.hora} - ${v.folio} - ${v.cliente} - Mesa: ${v.mesa} - Método: ${v.metodo} - $${v.total.toFixed(2)}\n`;
+        });
+    });
+
+    let reporteDiario = `CORTE DIARIO\nFecha: ${new Date().toLocaleDateString()}\n\n` +
+                        `Ventas Totales: ${totalVentas}\n` +
+                        `Entrada de Efectivo: $${totalEntrada.toFixed(2)}\n` +
+                        `Salida de Efectivo: $${totalSalida.toFixed(2)}\n` +
+                        `Dinero en Caja: $${totalCaja.toFixed(2)}\n\n` +
+                        `DETALLE DE VENTAS:\n${detalleVentas}`;
+
+    alert(reporteDiario);
+});
+
+</script>
+</body>
+</html>

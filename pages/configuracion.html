@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Hub | Configuración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos globales -->
+    <link rel="stylesheet" href="../assets/css/themes.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <!-- Estilos configuración -->
+    <link rel="stylesheet" href="../assets/css/configuracion.css">
+</head>
+
+<body>
+
+    <div class="d-flex">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">RestaurantHub</div>
+             <ul class="sidebar-menu">
+                <li><a href="../dashboard.html">Dashboard</a></li>
+                <li ><a href="pages/punto_venta.html">Punto de Venta</a></li>
+                <li ><a href="/pages/caja.html">Caja</a></li>
+                <li><a href="/pages/reservas.html">Reservas</a></li>
+                <li><a href="/pages/mesas.html">Mesas</a></li>
+                <li><a href="/pages/inventario.html">Inventario</a></li>
+                <li><a href="/pages/categorias.html">Categorias</a></li>
+                <li><a href="/pages/cocina.html">Cocina</a></li>
+                <li><a href="/pages/clientes.html">Clientes</a></li>
+                <li><a href="/pages/reportes.html">Reportes</a></li>
+                <li><a href="/pages/usuarios.html">Usuarios</a></li>
+                <li  class="active"><a href="/pages/configuracion.html">Configuración</a></li>
+            </ul>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <main class="content w-100">
+
+            <!-- HEADER -->
+            <header class="topbar mb-4">
+                <h4>⚙️ Configuración del Sistema</h4>
+                <p class="text-muted mb-0">Personaliza la información del restaurante</p>
+            </header>
+
+            <form class="container-fluid">
+
+                <!-- DATOS EMPRESA -->
+                <section class="card config-card mb-4">
+                    <h5 class="section-title">Datos de la Empresa</h5>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre del Restaurante</label>
+                            <input type="text" class="form-control" placeholder="Ej. Restaurante El Buen Sabor">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" placeholder="Ej. 55 1234 5678">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-control" placeholder="Calle, número, colonia">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">RFC</label>
+                            <input type="text" class="form-control" placeholder="RFC123456XXX">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- REGION Y SISTEMA -->
+                <section class="card config-card mb-4">
+                    <h5 class="section-title"> Región y Sistema</h5>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Zona Horaria</label>
+                            <select class="form-select">
+                                <option>México (GMT-6)</option>
+
+                                <option value="America/Monterrey">Monterrey (GMT-6)</option>
+                                <option value="America/Merida">Mérida (GMT-6)</option>
+                                <option value="America/Cancun">Cancún (GMT-5)</option>
+                                <option value="America/Tijuana">Tijuana (GMT-8)</option>
+                                <option value="America/Hermosillo">Hermosillo (GMT-7)</option>
+                                <option value="America/Mazatlan">Mazatlán (GMT-7)</option>
+                                <option value="America/Chihuahua">Chihuahua (GMT-7)</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Moneda</label>
+                            <select class="form-select">
+                                <option>MXN - Peso Mexicano</option>
+                                <option>USD - Dólar</option>
+                                <option>EUR - Euro</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <!-- LOGOTIPO -->
+                <section class="card config-card mb-4">
+                    <h5 class="section-title">Logotipo del Restaurante</h5>
+
+                    <div class="logo-upload mt-3">
+                        <img id="logoPreview" src="https://via.placeholder.com/180x120?text=Logo" alt="Logo">
+                        <input type="file" class="form-control mt-3" accept="image/*" onchange="previewLogo(event)">
+                    </div>
+                </section>
+
+                <!-- GUARDAR -->
+                <div class="text-end mb-5">
+                    <button type="button" class="btn btn-primary btn-lg">
+                        Guardar Configuración
+                    </button>
+                </div>
+
+            </form>
+
+        </main>
+    </div>
+
+    <script src="../assets/js/configuracion.js"></script>
+</body>
+
+</html>

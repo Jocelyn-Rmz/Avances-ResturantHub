@@ -1,0 +1,18 @@
+.mesa {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #ff7b00;
+    border-radius: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #ff7b00;
+    color: #111;
+    transition: 0.3s;
+}
+
+.mesa.disponible { background-color: #ff7b00; color: #111; }
+.mesa.ocupada { background-color: #e65c00; color:#fff; }

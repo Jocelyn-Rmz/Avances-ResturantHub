@@ -1,0 +1,14 @@
+:root {
+    --primary: #ff7a00;
+    --bg: #f5f6f8;
+    --sidebar: #111;
+    --card: #ffffff;
+    --text: #1f1f1f;
+}
+
+[data-theme="dark"] {
+    --bg: #0e0e0e;
+    --sidebar: #000;
+    --card: #1a1a1a;
+    --text: #ffffff;
+}

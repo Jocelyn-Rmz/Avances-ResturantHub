@@ -1,0 +1,24 @@
+.config-card {
+    background-color: var(--card);
+    padding: 25px;
+    border-radius: 14px;
+    border: none;
+}
+
+.section-title {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.logo-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.logo-upload img {
+    max-width: 180px;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+}

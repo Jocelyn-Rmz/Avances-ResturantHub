@@ -1,0 +1,83 @@
+/* TABLA INVENTARIO MODERNA - estilo consistente con categorías */
+
+/* Tabla principal */
+.table-inventario {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Encabezado */
+.table-inventario th {
+    font-weight: 600;
+    background-color: #ff8c00; /* naranja brillante */
+    color: #ffffff;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* Filas */
+.table-inventario td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0dcdc;
+    color: #333333;
+    vertical-align: middle;
+    background-color: #fcf7f7;
+}
+
+/* Hover sobre filas */
+.table-inventario tbody tr:hover {
+    background-color: #fff2e0;
+    cursor: pointer;
+}
+
+/* Badges de estado */
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.badge-activo {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.badge-inactivo {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+/* Botones de acciones */
+.table-inventario .btn {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    margin-right: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.table-inventario .btn-editar {
+    background-color: #ff8c00;
+    color: #ffffff;
+    border: none;
+}
+
+.table-inventario .btn-editar:hover {
+    background-color: #e67e00;
+}
+
+.table-inventario .btn-eliminar {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+}
+
+.table-inventario .btn-eliminar:hover {
+    background-color: #c0392b;
+}

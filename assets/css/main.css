@@ -1,0 +1,9 @@
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.content {
+    padding: 20px;
+}

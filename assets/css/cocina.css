@@ -1,0 +1,9 @@
+.orden-card {
+    border:2px solid #ff7b00;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+    background-color:#333;
+    color:#fff;
+}
+.orden-card h5 { color:#ff7b00; }

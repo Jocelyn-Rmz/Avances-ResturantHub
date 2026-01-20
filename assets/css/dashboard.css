@@ -1,0 +1,49 @@
+.topbar {
+    background-color: var(--card);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.datetime {
+    font-size: 14px;
+    color: var(--text);
+    opacity: 0.7;
+}
+
+.admin-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card);
+    padding: 15px 20px;
+    border-radius: 12px;
+}
+
+.admin-info small {
+    display: block;
+    opacity: 0.6;
+}
+
+.admin-actions button {
+    margin-left: 10px;
+}
+
+.dashboard-card {
+    padding: 25px;
+    border-radius: 14px;
+    color: white;
+}
+
+.dashboard-card.primary {
+    background: linear-gradient(135deg, #ff7a00, #ff9a3d);
+}
+
+.dashboard-card.success {
+    background: linear-gradient(135deg, #1dbf73, #28a745);
+}
+
+.block {
+    background-color: var(--card);
+    padding: 20px;
+    border-radius: 14px;
+}
