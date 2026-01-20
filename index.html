@@ -2,47 +2,64 @@
 <html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>Restaurant Hub | Login</title>
+    <title>RestaurantHub | Acceso</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Estilos -->
+    <!-- Estilos del sistema -->
     <link rel="stylesheet" href="assets/css/themes.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
-<body class="login-body">
 
-    <div class="login-container">
-        <div class="login-card">
+<body class="bg-app">
 
-            <h2 class="text-center mb-2">RestaurantHub</h2>
-            <p class="text-center text-muted mb-4">Sistema Punto de Venta</p>
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
 
-            <form onsubmit="login(event)">
-                <div class="mb-3">
-                    <label class="form-label">Usuario</label>
-                    <input type="text" class="form-control" placeholder="admin" required>
+        <div class="login-wrapper">
+
+            <!-- BRAND -->
+            <div class="login-brand mb-4 text-center">
+                <h1>RestaurantHub</h1>
+                <span>Sistema Punto de Venta</span>
+            </div>
+
+            <!-- CARD -->
+            <div class="card login-card">
+                <div class="card-body">
+
+                    <h5 class="mb-3 text-center">Iniciar Sesión</h5>
+
+                    <form onsubmit="login(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Usuario</label>
+                            <input type="text" class="form-control" placeholder="usuario" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" placeholder="••••••" required>
+                        </div>
+
+                        <button class="btn btn-primary w-100">
+                            Acceder al sistema
+                        </button>
+                    </form>
+
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" placeholder="••••••" required>
-                </div>
-
-                <button class="btn btn-primary w-100 mt-3">
-                    Ingresar
-                </button>
-            </form>
-
-            <div class="text-center mt-4">
+            <!-- FOOT -->
+            <div class="login-footer text-center mt-3">
                 <button class="btn btn-sm btn-outline-secondary" onclick="toggleTheme()">
                     🌙 Cambiar tema
                 </button>
             </div>
 
         </div>
+
     </div>
 
     <script src="assets/js/theme.js"></script>

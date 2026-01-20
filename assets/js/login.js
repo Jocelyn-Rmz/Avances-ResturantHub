@@ -1,7 +1,7 @@
 function login(e) {
     e.preventDefault();
 
-    // Login mock (temporal)
+    // Simulación temporal
     localStorage.setItem("auth", "true");
 
     window.location.href = "dashboard.html";

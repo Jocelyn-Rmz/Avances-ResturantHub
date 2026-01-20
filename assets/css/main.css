@@ -7,3 +7,6 @@ body {
 .content {
     padding: 20px;
 }
+.bg-app {
+    background-color: var(--bg);
+}
