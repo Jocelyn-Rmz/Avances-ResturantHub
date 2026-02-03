@@ -1,12 +1,29 @@
 body {
-    background-color: var(--bg);
-    color: var(--text);
     font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
 }
 
-.content {
-    padding: 20px;
+.topbar {
+    height: 60px;
+    background-color: #fff;
+    padding: 0 20px;
+    border-bottom: 1px solid #ddd;
 }
-.bg-app {
-    background-color: var(--bg);
+
+.dashboard-card {
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.dashboard-card h6 {
+    font-weight: 600;
+    color: #555;
+}
+
+.dashboard-card .valor {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ff8c00;
 }

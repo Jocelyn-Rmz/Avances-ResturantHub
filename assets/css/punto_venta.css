@@ -14,5 +14,54 @@
     transition: 0.3s;
 }
 
-.mesa.disponible { background-color: #ff7b00; color: #111; }
-.mesa.ocupada { background-color: #e65c00; color:#fff; }
+.mesa.disponible {
+    background-color: #ff7b00;
+    color: #111;
+}
+
+.mesa.ocupada {
+    background-color: #e65c00;
+    color: #fff;
+}
+
+.mesa-card {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
+}
+
+.mesa-card.ocupada {
+    background-color: #e74c3c;
+}
+
+.mesa-card:hover {
+    opacity: 0.8;
+}
+
+.producto-card {
+    width: 150px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #ff8c00;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.producto-card:hover {
+    background-color: #e67e00;
+}
+
+#cuentaActual {
+    max-height: 400px;
+    overflow-y: auto;
+}

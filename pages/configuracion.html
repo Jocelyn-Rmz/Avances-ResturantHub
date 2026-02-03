@@ -9,7 +9,10 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Estilos globales -->
+    <!-- Bootstrap Icons (ANTES NO ESTABA) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Estilos globales (RUTA CORRECTA DESDE /pages) -->
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
@@ -20,122 +23,124 @@
 
 <body>
 
-    <div class="d-flex">
+<div class="d-flex">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="sidebar-header">RestaurantHub</div>
-             <ul class="sidebar-menu">
-                <li><a href="../dashboard.html">Dashboard</a></li>
-                <li ><a href="/pages/punto_venta.html">Punto de Venta</a></li>
-                <li ><a href="/pages/caja.html">Caja</a></li>
-                <li><a href="/pages/reservas.html">Reservas</a></li>
-                <li><a href="/pages/mesas.html">Mesas</a></li>
-                <li><a href="/pages/inventario.html">Inventario</a></li>
-                <li><a href="/pages/categorias.html">Categorias</a></li>
-                <li><a href="/pages/cocina.html">Cocina</a></li>
-                <li><a href="/pages/clientes.html">Clientes</a></li>
-                <li><a href="/pages/reportes.html">Reportes</a></li>
-                <li><a href="/pages/usuarios.html">Usuarios</a></li>
-                <li  class="active"><a href="/pages/configuracion.html">Configuración</a></li>
-            </ul>
-        </aside>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+    <div class="sidebar-header d-flex align-items-center gap-2">
+                <i class="bi bi-shop fs-4"></i>
+                <span>RestaurantHub</span>
+            </div>
+        <ul class="sidebar-menu">
+            <li><a href="../dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            <li><a href="punto_venta.html"><i class="bi bi-receipt"></i> Punto de Venta</a></li>
+            <li><a href="caja.html"><i class="bi bi-cash-stack"></i> Caja</a></li>
+            <li><a href="reservas.html"><i class="bi bi-calendar-event"></i> Reservas</a></li>
+            <li><a href="mesas.html"><i class="bi bi-grid-3x3-gap"></i> Mesas</a></li>
+           
+            <li><a href="categorias.html"><i class="bi bi-tags"></i>Productos</a></li>
+            <li><a href="cocina.html"><i class="bi bi-fire"></i> Producción</a></li>
+          
+            <li><a href="reportes.html"><i class="bi bi-bar-chart"></i> Reportes</a></li>
+            <li><a href="usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+            <li class="active"><a href="configuracion.html"><i class="bi bi-gear"></i> Configuración</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <!-- CAMBIO CLAVE: flex-grow-1 para que funcione igual que dashboard -->
+    <main class="flex-grow-1">
+
+        <!-- TOPBAR (IGUAL AL DASHBOARD PARA UX CONSISTENTE) -->
+        <header class="topbar d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <!-- BOTÓN HAMBURGUESA SOLO EN MÓVIL -->
+                <button class="btn btn-outline-secondary d-md-none" id="btnMenu">☰</button>
+                <h5 class="m-0">⚙️ Configuración del Sistema</h5>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-muted">Restaurant Hub</span>
+                <button class="btn btn-outline-secondary">🌙</button>
+            </div>
+        </header>
 
         <!-- CONTENIDO -->
-        <main class="content w-100">
+        <section class="container-fluid p-4">
 
-            <!-- HEADER -->
-            <header class="topbar mb-4">
-                <h4>⚙️ Configuración del Sistema</h4>
-                <p class="text-muted mb-0">Personaliza la información del restaurante</p>
-            </header>
+            <!-- DATOS EMPRESA -->
+            <div class="card config-card mb-4">
+                <h5 class="section-title">Datos de la Empresa</h5>
 
-            <form class="container-fluid">
-
-                <!-- DATOS EMPRESA -->
-                <section class="card config-card mb-4">
-                    <h5 class="section-title">Datos de la Empresa</h5>
-
-                    <div class="row g-3 mt-2">
-                        <div class="col-md-6">
-                            <label class="form-label">Nombre del Restaurante</label>
-                            <input type="text" class="form-control" placeholder="Ej. Restaurante El Buen Sabor">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" placeholder="Ej. 55 1234 5678">
-                        </div>
-
-                        <div class="col-md-8">
-                            <label class="form-label">Dirección</label>
-                            <input type="text" class="form-control" placeholder="Calle, número, colonia">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">RFC</label>
-                            <input type="text" class="form-control" placeholder="RFC123456XXX">
-                        </div>
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre del Restaurante</label>
+                        <input type="text" class="form-control">
                     </div>
-                </section>
 
-                <!-- REGION Y SISTEMA -->
-                <section class="card config-card mb-4">
-                    <h5 class="section-title"> Región y Sistema</h5>
-
-                    <div class="row g-3 mt-2">
-                        <div class="col-md-6">
-                            <label class="form-label">Zona Horaria</label>
-                            <select class="form-select">
-                                <option>México (GMT-6)</option>
-
-                                <option value="America/Monterrey">Monterrey (GMT-6)</option>
-                                <option value="America/Merida">Mérida (GMT-6)</option>
-                                <option value="America/Cancun">Cancún (GMT-5)</option>
-                                <option value="America/Tijuana">Tijuana (GMT-8)</option>
-                                <option value="America/Hermosillo">Hermosillo (GMT-7)</option>
-                                <option value="America/Mazatlan">Mazatlán (GMT-7)</option>
-                                <option value="America/Chihuahua">Chihuahua (GMT-7)</option>
-
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Moneda</label>
-                            <select class="form-select">
-                                <option>MXN - Peso Mexicano</option>
-                                <option>USD - Dólar</option>
-                                <option>EUR - Euro</option>
-                            </select>
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control">
                     </div>
-                </section>
 
-
-
-                <!-- LOGOTIPO -->
-                <section class="card config-card mb-4">
-                    <h5 class="section-title">Logotipo del Restaurante</h5>
-
-                    <div class="logo-upload mt-3">
-                        <img id="logoPreview" src="https://via.placeholder.com/180x120?text=Logo" alt="Logo">
-                        <input type="file" class="form-control mt-3" accept="image/*" onchange="previewLogo(event)">
+                    <div class="col-md-8">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" class="form-control">
                     </div>
-                </section>
 
-                <!-- GUARDAR -->
-                <div class="text-end mb-5">
-                    <button type="button" class="btn btn-primary btn-lg">
-                        Guardar Configuración
-                    </button>
+                    <div class="col-md-4">
+                        <label class="form-label">RFC</label>
+                        <input type="text" class="form-control">
+                    </div>
                 </div>
+            </div>
 
-            </form>
+            <!-- REGIÓN -->
+            <div class="card config-card mb-4">
+                <h5 class="section-title">Región y Sistema</h5>
 
-        </main>
-    </div>
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Zona Horaria</label>
+                        <select class="form-select">
+                            <option>México (GMT-6)</option>
+                            <option>Cancún (GMT-5)</option>
+                            <option>Tijuana (GMT-8)</option>
+                        </select>
+                    </div>
 
-    <script src="../assets/js/configuracion.js"></script>
+                    <div class="col-md-6">
+                        <label class="form-label">Moneda</label>
+                        <select class="form-select">
+                            <option>MXN</option>
+                            <option>USD</option>
+                            <option>EUR</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGO -->
+            <div class="card config-card mb-4">
+                <h5 class="section-title">Logotipo</h5>
+                <input type="file" class="form-control mt-2">
+            </div>
+
+            <!-- GUARDAR -->
+            <div class="text-end">
+                <button class="btn btn-primary btn-lg">Guardar Configuración</button>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS DEL SIDEBAR (ANTES NO ESTABA) -->
+<script src="../assets/js/sidebar.js"></script>
+
 </body>
-
 </html>

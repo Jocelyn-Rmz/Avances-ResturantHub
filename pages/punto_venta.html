@@ -11,70 +11,32 @@
     <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
-
-    <style>
-        .mesa-card {
-            width: 80px;
-            height: 80px;
-            margin: 5px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background-color: #28a745;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .mesa-card.ocupada {
-            background-color: #e74c3c;
-        }
-
-        .mesa-card:hover {
-            opacity: 0.8;
-        }
-
-        .producto-card {
-            width: 150px;
-            margin: 5px;
-            border-radius: 10px;
-            background-color: #ff8c00;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .producto-card:hover {
-            background-color: #e67e00;
-        }
-
-        #cuentaActual {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-    </style>
+    <!-- Estilos configuración -->
+    <link rel="stylesheet" href="../assets/css/punto_venta.css">
 </head>
 
 <body>
 
     <div class="d-flex">
         <aside class="sidebar">
-            <div class="sidebar-header">RestaurantHub</div>
+            <div class="sidebar-header d-flex align-items-center gap-2">
+                <i class="bi bi-shop fs-4"></i>
+                <span>RestaurantHub</span>
+            </div>
             <ul class="sidebar-menu">
-                <li><a href="../dashboard.html">Dashboard</a></li>
-                <li class="active"><a href="/pages/punto_venta.html">Punto de Venta</a></li>
-                <li><a href="/pages/caja.html">Caja</a></li>
-                <li><a href="/pages/reservas.html">Reservas</a></li>
-                <li><a href="/pages/mesas.html">Mesas</a></li>
-                <li><a href="/pages/inventario.html">Inventario</a></li>
-                <li><a href="/pages/categorias.html">Categorias</a></li>
-                <li><a href="/pages/cocina.html">Cocina</a></li>
-                <li><a href="/pages/clientes.html">Clientes</a></li>
-                <li><a href="/pages/reportes.html">Reportes</a></li>
-                <li><a href="/pages/usuarios.html">Usuarios</a></li>
-                <li><a href="/pages/configuracion.html">Configuración</a></li>
+                <li><a href="../dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                <li class="active"><a href="punto_venta.html"><i class="bi bi-receipt"></i> Punto de Venta</a></li>
+                <li><a href="caja.html"><i class="bi bi-cash-stack"></i> Caja</a></li>
+                <li><a href="reservas.html"><i class="bi bi-calendar-event"></i> Reservas</a></li>
+                <li><a href="mesas.html"><i class="bi bi-grid-3x3-gap"></i> Mesas</a></li>
+                
+                <li><a href="categorias.html"><i class="bi bi-tags"></i> Productos</a></li>
+                <li><a href="cocina.html"><i class="bi bi-fire"></i> Producción</a></li>
+                
+                <li><a href="reportes.html"><i class="bi bi-bar-chart"></i> Reportes</a></li>
+                <li><a href="usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+                <li><a href="configuracion.html"><i class="bi bi-gear"></i> Configuración</a>
+                </li>
             </ul>
 
         </aside>
@@ -104,9 +66,54 @@
 
                                 <!-- Cuenta -->
                                 <div class="col-md-4">
-                                    <h5>Cuenta Actual</h5>
-                                    <div id="cuentaActual" class="border p-2 bg-light"></div>
+                                    <h4 class="mt-2">Cuenta Actual</h4>
+
+                                    <table class="table table-sm align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Cant</th>
+                                                <th>$</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cuentaBody"></tbody>
+                                    </table>
+
                                     <h5 class="mt-2">Total: $<span id="totalCuenta">0.00</span></h5>
+                                    <hr>
+
+                                    <h6>Propina</h6>
+                                    <div class="d-flex gap-2 mb-2">
+                                        <button class="btn btn-outline-secondary btn-sm"
+                                            onclick="aplicarPropinaPorcentaje(0.10)">10%</button>
+                                        <button class="btn btn-outline-secondary btn-sm"
+                                            onclick="aplicarPropinaPorcentaje(0.15)">15%</button>
+                                        <button class="btn btn-outline-secondary btn-sm"
+                                            onclick="aplicarPropinaPorcentaje(0.20)">20%</button>
+                                    </div>
+
+                                    <input type="number" class="form-control mb-2" placeholder="Propina en efectivo"
+                                        oninput="aplicarPropinaEfectivo(this.value)">
+
+                                    <p>Propina: $<span id="propinaMonto">0.00</span></p>
+
+                                    <hr>
+
+                                    <h6>Forma de pago</h6>
+                                    <select class="form-select mb-2" id="formaPago" onchange="actualizarPago()">
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="tarjeta">Tarjeta</option>
+                                        <option value="mixto">Mixto</option>
+                                    </select>
+
+                                    <input type="number" class="form-control mb-2" placeholder="Pago en efectivo"
+                                        id="pagoEfectivo" oninput="actualizarPago()">
+
+                                    <p>Cambio: $<span id="cambio">0.00</span></p>
+
+                                    <h5>Total Final: $<span id="totalFinal">0.00</span></h5>
+
                                 </div>
                             </div>
                         </div>
@@ -134,7 +141,8 @@
         const modalPedido = new bootstrap.Modal(document.getElementById('modalPedido'));
         const mesaSeleccionadaSpan = document.getElementById('mesaSeleccionada');
         const productosContainer = document.getElementById('productosContainer');
-        const cuentaActual = document.getElementById('cuentaActual');
+        const cuentaBody = document.getElementById('cuentaBody');
+
         const totalCuenta = document.getElementById('totalCuenta');
 
         let mesaActiva = null;
@@ -177,7 +185,8 @@
             mesaActiva = { area, numero: mesa.numero };
             mesaSeleccionadaSpan.textContent = mesa.numero;
             pedidoActual = [];
-            cuentaActual.innerHTML = '';
+           cuentaBody.innerHTML = '';
+
             totalCuenta.textContent = '0.00';
 
             productosContainer.innerHTML = '';
@@ -201,17 +210,56 @@
         }
 
         function renderCuenta() {
-            cuentaActual.innerHTML = '';
+            cuentaBody.innerHTML = '';
             let total = 0;
+
             pedidoActual.forEach((p, idx) => {
-                const div = document.createElement('div');
                 const subtotal = p.precio * p.cantidad;
                 total += subtotal;
-                div.textContent = `${p.nombre} x${p.cantidad} - $${subtotal} ${p.comentario ? '(' + p.comentario + ')' : ''}`;
-                cuentaActual.appendChild(div);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+            <td>${p.nombre}</td>
+            <td>
+                <button class="btn btn-sm btn-outline-secondary"
+                    onclick="cambiarCantidad(${idx}, -1)">−</button>
+
+                <span class="mx-2">${p.cantidad}</span>
+
+                <button class="btn btn-sm btn-outline-secondary"
+                    onclick="cambiarCantidad(${idx}, 1)">+</button>
+            </td>
+            <td>$${subtotal.toFixed(2)}</td>
+            <td>
+                <button class="btn btn-sm btn-danger"
+                    onclick="eliminarProducto(${idx})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        `;
+                cuentaBody.appendChild(tr);
             });
+
             totalCuenta.textContent = total.toFixed(2);
+            actualizarTotales();
         }
+
+        function cambiarCantidad(index, cambio) {
+            pedidoActual[index].cantidad += cambio;
+
+            if (pedidoActual[index].cantidad <= 0) {
+                pedidoActual.splice(index, 1);
+            }
+
+            renderCuenta();
+        }
+
+        function eliminarProducto(index) {
+            pedidoActual.splice(index, 1);
+            renderCuenta();
+        }
+
+
 
         // Confirmar pedido
         document.getElementById('confirmarPedido').addEventListener('click', () => {
@@ -231,24 +279,55 @@
             alert('Pedido enviado a cocina');
         });
 
+function agruparProductos(items) {
+    const map = {};
+
+    items.forEach(p => {
+        if (!map[p.nombre]) {
+            map[p.nombre] = {
+                nombre: p.nombre,
+                cantidad: p.cantidad,
+                precio: p.precio
+            };
+        } else {
+            map[p.nombre].cantidad += p.cantidad;
+        }
+    });
+
+    return Object.values(map);
+}
+
+
+
         // Imprimir ticket
         document.getElementById('imprimirTicket').addEventListener('click', () => {
-            if (pedidoActual.length === 0) return alert('Agregue productos al pedido');
+            if (pedidoActual.length === 0) return alert('Agregue productos');
 
-            let contenido = `TICKET DE PEDIDO - Mesa ${mesaActiva.numero} (${mesaActiva.area})\n\n`;
-            let total = 0;
-            pedidoActual.forEach(p => {
-                const subtotal = p.precio * p.cantidad;
-                total += subtotal;
-                contenido += `${p.nombre} x${p.cantidad} - $${subtotal.toFixed(2)} ${p.comentario ? '(' + p.comentario + ')' : ''}\n`;
-            });
-            contenido += `\nTOTAL: $${total.toFixed(2)}\n\nGracias por su preferencia!`;
+            const subtotal = pedidoActual.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+            const totalFinal = subtotal + propina;
 
-            const ventana = window.open('', 'Ticket', 'width=400,height=600');
-            ventana.document.write(`<pre>${contenido}</pre>`);
-            ventana.document.close();
-            ventana.print();
+            const itemsAgrupados = agruparProductos(pedidoActual);
+
+            const ticketData = {
+                mesa: mesaActiva.numero,
+                area: mesaActiva.area,
+                fecha: new Date().toLocaleString(),
+                items: itemsAgrupados,
+                subtotal,
+                propina,
+                tipoPropina,
+                totalFinal,
+                formaPago,
+                efectivoRecibido,
+                cambio
+            };
+
+            localStorage.setItem('ticketActual', JSON.stringify(ticketData));
+            window.open('ticket.html', '_blank', 'width=320,height=600');
         });
+
+
+
 
         // Cerrar mesa
         document.getElementById('cerrarMesa').addEventListener('click', () => {
@@ -279,6 +358,51 @@
             mostrarMesas(mesaActiva.area);
             alert('Mesa cerrada y venta registrada');
         });
+        let propina = 0;
+        let tipoPropina = 'Ninguna';
+        let formaPago = 'efectivo';
+        let efectivoRecibido = 0;
+        let cambio = 0;
+
+
+        function aplicarPropinaPorcentaje(porcentaje) {
+            const subtotal = parseFloat(totalCuenta.textContent);
+            propina = subtotal * porcentaje;
+            tipoPropina = `${porcentaje * 100}%`;
+            actualizarTotales();
+        }
+
+        function aplicarPropinaEfectivo(monto) {
+            propina = parseFloat(monto) || 0;
+            tipoPropina = 'Efectivo';
+            actualizarTotales();
+        }
+
+        function actualizarTotales() {
+            const subtotal = parseFloat(totalCuenta.textContent);
+            document.getElementById('propinaMonto').textContent = propina.toFixed(2);
+            document.getElementById('totalFinal').textContent = (subtotal + propina).toFixed(2);
+            actualizarPago();
+        }
+
+        function actualizarPago() {
+            formaPago = document.getElementById('formaPago').value;
+
+            const totalFinal = parseFloat(document.getElementById('totalFinal').textContent) || 0;
+            efectivoRecibido = parseFloat(document.getElementById('pagoEfectivo').value) || 0;
+
+            cambio = 0;
+
+            if (formaPago === 'efectivo') {
+                cambio = efectivoRecibido - totalFinal;
+            }
+
+            if (formaPago === 'mixto') {
+                cambio = efectivoRecibido > totalFinal ? efectivoRecibido - totalFinal : 0;
+            }
+
+            document.getElementById('cambio').textContent = cambio > 0 ? cambio.toFixed(2) : '0.00';
+        }
 
     </script>
 </body>

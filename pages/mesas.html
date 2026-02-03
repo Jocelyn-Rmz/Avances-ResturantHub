@@ -24,20 +24,24 @@
 
 <div class="d-flex">
     <aside class="sidebar">
-        <div class="sidebar-header">RestaurantHub</div>
+        <div class="sidebar-header d-flex align-items-center gap-2">
+                <i class="bi bi-shop fs-4"></i>
+                <span>RestaurantHub</span>
+            </div>
         <ul class="sidebar-menu">
-                <li><a href="../dashboard.html">Dashboard</a></li>
-                <li ><a href="/pages/punto_venta.html">Punto de Venta</a></li>
-                <li ><a href="/pages/caja.html">Caja</a></li>
-                <li><a href="/pages/reservas.html">Reservas</a></li>
-                <li class="active"><a href="/pages/mesas.html">Mesas</a></li>
-                <li><a href="/pages/inventario.html">Inventario</a></li>
-                <li><a href="/pages/categorias.html">Categorias</a></li>
-                <li><a href="/pages/cocina.html">Cocina</a></li>
-                <li><a href="/pages/clientes.html">Clientes</a></li>
-                <li><a href="/pages/reportes.html">Reportes</a></li>
-                <li><a href="/pages/usuarios.html">Usuarios</a></li>
-                <li><a href="/pages/configuracion.html">Configuración</a></li>
+                <li><a href="../dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                <li><a href="punto_venta.html"><i class="bi bi-receipt"></i> Punto de Venta</a></li>
+                <li><a href="caja.html"><i class="bi bi-cash-stack"></i> Caja</a></li>
+                <li><a href="reservas.html"><i class="bi bi-calendar-event"></i> Reservas</a></li>
+                <li class="active"><a href="mesas.html"><i class="bi bi-grid-3x3-gap"></i> Mesas</a></li>
+               
+                <li><a href="categorias.html"><i class="bi bi-tags"></i>Productos</a></li>
+                <li><a href="cocina.html"><i class="bi bi-fire"></i> Produccións</a></li>
+               
+                <li><a href="reportes.html"><i class="bi bi-bar-chart"></i> Reportes</a></li>
+                <li><a href="usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+                <li><a href="configuracion.html"><i class="bi bi-gear"></i> Configuración</a>
+                </li>
             </ul>
     </aside>
 
@@ -50,6 +54,8 @@
                 <button class="btn btn-orange" id="btnNuevaMesa"><i class="bi bi-plus-circle"></i> Nueva Mesa</button>
                 <button class="btn btn-orange" id="btnAgregarBarra">Agregar Barra de Bebidas</button>
                 <button class="btn btn-success" id="btnGuardarDiseño">Guardar Diseño</button>
+                <button class="btn btn-outline-danger" id="btnResetDiseno">Reiniciar Diseño</button>
+
             </div>
         </div>
 
@@ -167,6 +173,25 @@ if(localStorage.getItem('disenoMesas')){
     areas = Object.keys(mesas);
     actualizarAreas();
 }
+
+document.getElementById('btnResetDiseno').addEventListener('click', () => {
+    if(!confirm('¿Seguro que deseas borrar todo el diseño?')) return;
+
+    // Vaciar datos en memoria
+    areas = [];
+    mesas = {};
+
+    // Borrar almacenamiento
+    localStorage.removeItem('disenoMesas');
+
+    // Limpiar interfaz
+    areasTabs.innerHTML = '';
+    areasContent.innerHTML = '';
+
+    alert('Diseño reiniciado (modo demostración)');
+});
+
 </script>
+
 </body>
 </html>
